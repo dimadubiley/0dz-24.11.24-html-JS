@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ДЗ</title>
+</head>
+
+<body>
+    <h2>Тип топлива:</h2>
+    <select id="fuelType">
+        <option value="benzin">Бензин</option>
+        <option value="diesel">Дизель</option>
+        <option value="electric">Электричество</option>
+    </select>
+    <br>
+    <h2>Кол-во:</h2>
+    <input type="number" id="amount" placeholder="Введите литры">
+    <br>
+    <h2>Оплата:</h2>
+    <div>
+        Валюта:
+        <label class="toplivo"><input type="radio" name="currency" value="uah" checked> ₴</label>
+        <label class="toplivo"><input type="radio" name="currency" value="eur"> €</label>
+        <label class="toplivo"><input type="radio" name="currency" value="usd"> $</label>
+    </div>
+    <h2>К оплате:</h2>
+    <input type="text" id="total" readonly>
+    <button id="enter" onclick="priceFuel()">OK</button>
+
+    <style>
+        body {
+            padding-left: 50px;
+            width: 250px;
+        }
+
+        h2 {
+            margin: 10px 0;
+        }
+
+        input,
+        select {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background: #14ac19;
+            border: none;
+            padding: 10px;
+            width: 200px;
+            font-size: 15px;
+            border-radius: 4px;
+        }
+
+        div {
+            margin: 10px 0;
+        }
+
+        #enter {
+            margin-top: 20px;
+        }
+
+        .toplivo {
+            margin-right: 10px;
+        }
+    </style>
+
+    <script>
+        function priceFuel() {
+            const fuelType = document.getElementById("fuelType").value;
+            const amount = parseFloat(document.getElementById("amount").value);
+            const currency = document.querySelector('input[name="currency"]:checked').value;
+
+            if (!amount) {
+                return alert("Введите количество топлива.");
+            }
+
+            const prices = {
+                benzin: 50,
+                diesel: 45,
+                electric: 10
+            };
+
+            const conversion = {
+                uah: 1,
+                eur: 0.03,
+                usd: 0.025
+            };
+
+            const total = prices[fuelType] * conversion[currency] * amount;
+            document.getElementById("total").value = `${total.toFixed(2)} ${currency.toUpperCase()}`;
+        };
+    </script>
+</body>
+
+</html>
